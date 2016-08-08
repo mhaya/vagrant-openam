@@ -4,7 +4,7 @@
 
 
 - name: Deploy OpenAM
-  copy: src=files/OpenAM-14.0.0-SNAPSHOT_20160802.war dest=/usr/share/tomcat/webapps/openam.war
+  copy: src=files/OpenAM-14.0.0-SNAPSHOT_20160805.war dest=/usr/share/tomcat/webapps/openam.war
   when:
     - is_openam.stat.exists==False
 
