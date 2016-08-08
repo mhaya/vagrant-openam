@@ -1,0 +1,30 @@
+- name: install tomcat 
+  yum: name={{ item }} state=present
+  with_items:
+    - tomcat
+    - tomcat-admin-webapps
+
+- name: start tomcat
+  service: name=tomcat state=started enabled=yes
+
+- name: configure tomcat.conf
+  template:
+    src: templates/tomcat.conf
+    dest: /usr/share/tomcat/conf/tomcat.conf
+    owner: tomcat
+    mode: 0664
+
+- name: configure server.xml
+  template:
+    src: templates/server.xml
+    dest: /usr/share/tomcat/conf/server.xml 
+    owner: tomcat
+    mode: 0664
+
+- name: configure tomcat-users.xml
+  template:
+    src: templates/tomcat-users.xml
+    dest: /usr/share/tomcat/conf/tomcat-users.xml
+    owner: tomcat
+    mode: 0660
+  notify: restart tomcat

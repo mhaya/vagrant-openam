@@ -1,0 +1,13 @@
+
+- name: install php 
+  yum: name={{ item }} state=present
+  with_items:
+    - php
+    - php-devel
+    - php-common
+    - php-cli
+    - php-mbstring
+    - php-soap
+    - php-xml
+    - php-pear
+

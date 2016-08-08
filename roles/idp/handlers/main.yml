@@ -1,0 +1,5 @@
+---
+- include: handler_tomcat.yml
+- include: handler_haproxy.yml
+- include: handler_rsyslog.yml
+

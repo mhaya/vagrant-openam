@@ -1,0 +1,19 @@
+- name: install firewalld
+  yum: name=firewalld state=present
+
+- name: start firewalld
+  service: name=firewalld state=started enabled=yes
+
+- name: allow service
+  firewalld: service={{ item }} permanent=true state=enabled immediate=true
+  with_items: firewalld_accept_services
+
+- name: allow port
+  firewalld: port={{ item }} permanent=true state=enabled immediate=true
+  with_items: firewalld_accept_ports
+
+- name: change interface of default zone
+  firewalld: zone=public interface=enp0s8 permanent=true state=enabled immediate=true
+  notify: reload firewalld
+  
+

@@ -1,0 +1,9 @@
+firewalld_accept_services:
+     - ssh
+     - http 
+     - https
+
+firewalld_accept_ports:
+    - 8080/tcp
+    - 8443/tcp
+

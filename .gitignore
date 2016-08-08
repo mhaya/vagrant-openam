@@ -1,0 +1,8 @@
+.vagrant
+.bundle
+vendor
+*~
+*.bak
+roles/idp/files/OpenAM*.war 
+
+

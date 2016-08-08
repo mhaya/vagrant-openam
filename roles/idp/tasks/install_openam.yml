@@ -1,0 +1,16 @@
+- name: Check installed OpenAM
+  stat: path=/usr/share/tomcat/webapps/openam.war
+  register: is_openam
+
+
+- name: Deploy OpenAM
+  copy: src=files/OpenAM-14.0.0-SNAPSHOT_20160802.war dest=/usr/share/tomcat/webapps/openam.war
+  when:
+    - is_openam.stat.exists==False
+
+- name: configure limits
+  template:
+    src: templates/openam_limits.conf
+    dest: /etc/security/limits.d/openam.conf
+
+

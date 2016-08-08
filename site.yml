@@ -1,0 +1,29 @@
+- name: apply common configuration to all nodes
+  hosts: all
+  remote_user: root
+
+- name: idp1の設定
+  hosts: idp1 
+  become: yes
+  user: vagrant
+  roles:
+    - common
+    - idp
+
+
+- name: idp2の設定
+  hosts: idp2
+  become: yes
+  user: vagrant
+  roles:
+    - common
+    - idp
+
+- name: spの設定
+  hosts: sp
+  become: yes
+  user: vagrant
+  roles:
+    - common
+    - sp
+

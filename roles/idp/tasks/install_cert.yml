@@ -1,0 +1,19 @@
+- name: copy idp.crt
+  copy: src=files/idp.crt dest=/usr/share/tomcat/idp.crt
+
+- name: copy idp.key
+  copy: src=files/idp.key dest=/usr/share/tomcat/idp.key
+
+- name: copy bundle.pem
+  copy: src=files/bundle.pem dest=/usr/share/tomcat/bundle.pem
+
+- name: copy idp.p12
+  copy: src=files/idp.p12 dest=/usr/share/tomcat/idp.p12
+
+- name: delete keystore
+  file: path=/usr/share/tomcat/.keystore state=absent
+
+- name: create keystore
+  command: keytool -importkeystore -srckeystore /usr/share/tomcat/idp.p12 -srcstoretype pkcs12 -srcstorepass "changeit" -srcalias "tomcat" -destalias "tomcat" -destkeystore /usr/share/tomcat/.keystore -deststoretype jks -deststorepass "changeit" -destalias "tomcat" -noprompt
+
+

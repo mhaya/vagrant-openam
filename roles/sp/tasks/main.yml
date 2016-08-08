@@ -1,0 +1,5 @@
+---
+- include: install_httpd.yml
+- include: install_php.yml
+- include: install_simplesamlphp.yml
+

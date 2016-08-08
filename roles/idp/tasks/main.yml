@@ -1,0 +1,7 @@
+---
+- include: install_jdk.yml
+- include: install_tomcat.yml
+- include: install_openam.yml
+- include: install_cert.yml
+- include: install_haproxy.yml
+

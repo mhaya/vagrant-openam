@@ -1,0 +1,61 @@
+- name: check installed simplesamlphp
+  stat: path=/var/www/simplesamlphp
+  register: is_simplesamlphp
+
+- name: download simplesamlphp
+  get_url: url="https://github.com/simplesamlphp/simplesamlphp/releases/download/v1.14.7/simplesamlphp-1.14.7.tar.gz" sha256sum="a7a24d4dc89819f7e53141b38ae36b092a5c1fc9cb2e3cee253c765e5942be52" dest=/tmp force=true
+
+- name: untar SimpleSAMLphp
+  command: tar -zxf /tmp/simplesamlphp-1.14.7.tar.gz -C /var/www
+  register: unpacked_simplesamlphp
+  when:
+    - is_simplesamlphp.stat.exists==False
+
+- name: create symlink
+  command: ln -s /var/www/simplesamlphp-1.14.7 /var/www/simplesamlphp
+  register: created_symlink
+  when:
+   - is_simplesamlphp.stat.exists==False
+   - unpacked_simplesamlphp | succeeded
+
+- name: deploy simplesamlphp
+  template:
+    src: templates/simplesamlphp.conf
+    dest: /etc/httpd/conf.d/simplesamlphp.conf
+  notify: restart httpd
+
+- name: copy certificate
+  copy: src=files/sp.crt dest=/var/www/simplesamlphp/cert/sp.crt
+  when:
+   - created_symlink | succeeded
+
+- name: copy private key
+  copy: src=files/sp.key dest=/var/www/simplesamlphp/cert/sp.key
+  when:
+   - created_symlink | succeeded
+
+
+- name: configure sp
+  template:
+    src: templates/authsources.php
+    dest: /var/www/simplesamlphp/config/authsources.php
+  when:
+    - created_symlink | succeeded
+
+
+- name: configure idp metadata
+  template:
+    src: templates/saml20-idp-remote.php
+    dest: /var/www/simplesamlphp/metadata/saml20-idp-remote.php
+  when:
+   - created_symlink | succeeded
+
+
+- name: configure 
+  template:
+    src: templates/config.php
+    dest: /var/www/simplesamlphp/config/config.php
+  when:
+   - created_symlink | succeeded
+
+
