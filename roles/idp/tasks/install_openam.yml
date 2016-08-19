@@ -12,5 +12,5 @@
   template:
     src: templates/openam_limits.conf
     dest: /etc/security/limits.d/openam.conf
-
+  notify: restart tomcat
 
