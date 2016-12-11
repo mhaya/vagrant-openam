@@ -3,7 +3,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.boot_timeout = 500
   config.vm.box = "centos7"
-  config.vm.box_url = "https://googledrive.com/host/0B2JacpSnObRwaExDNUVOYUcyYWM/centos7.box"
+  config.vm.box_url = "https://googledrive.com/host/0B2JacpSnObRwRDk2UVZONC1HTUE/centos7.box"
   #config.vm.box = "centos"
   #config.vm.box_url = "https://googledrive.com/host/0B2JacpSnObRwOFVnbFJkSDNvaEE"
   config.ssh.insert_key = false 
